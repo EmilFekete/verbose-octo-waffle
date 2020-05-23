@@ -38,4 +38,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+const mongoConnect = require('./util/database').mongoConnect;
+
+mongoConnect(() => {
+  app.listen(3000);
+});
+
 module.exports = app;
