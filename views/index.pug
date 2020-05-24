@@ -1,5 +1,6 @@
 extends layout
 
 block content
-  form(action="generate-link", method="post")
+  form(action="create-room", method="post")
+    input(type="text", name="name")
     button(type="submit") Click me!

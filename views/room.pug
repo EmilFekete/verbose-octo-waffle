@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  p Hello in Room: #{room.name}
+  div(class="addVideo")
+    form(action=room.id + "/add-video", method="post")
+      input(type="text", name="url")
+      input(type="text", name="description")
+      button(type="submit") Add Video!
+    
+  ul
+    each video in room.videos
+      li
+        iframe(src=video.url, frameborder="0")
+
+        p= video.description
+        p count = #{video.voteCount}
+        form(action=room.id + "/vote", method="get")
+          input(type="hidden", name="video-id" value=video._id)
+          button(type="submit") Vote
