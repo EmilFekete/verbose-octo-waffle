@@ -3,8 +3,8 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 
-var indexRouter = require("./routes/index");
-var roomRouter = require("./routes/rooms");
+var homeRouter = require("./routes/home");
+var roomRouter = require("./routes/room");
 
 var app = express();
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+app.use("/", homeRouter);
 app.use("/room", roomRouter);
 
 // catch 404 and forward to error handler

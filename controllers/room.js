@@ -1,23 +1,17 @@
-const express = require("express");
-const roomRouter = express.Router();
-const roomItemRouter = express.Router({ mergeParams: true });
-const Room = require("../model/Models").Room;
-const YoutubeVideo = require("../model/Models").YoutubeVideo;
-const ObjectId = require("mongodb").ObjectId;
+const Room = require("../models/room");
+const Video = require("../models/video");
 
-roomRouter.use("/:roomId", roomItemRouter);
-
-roomRouter.get("/:roomId", function (req, res, next) {
+exports.getRoom = (req, res, next) => {
   Room.findById(req.params["roomId"]).then((room) => {
     res.render("room", {
       room: room,
     });
   });
-});
+};
 
-roomItemRouter.post("/add-video", function (req, res, next) {
+exports.addVideo = (req, res, next) => {
   Room.findById(req.params["roomId"]).then((room) => {
-    const video = new YoutubeVideo({
+    const video = new Video({
       url: req.body.url,
       description: req.body.description,
       uploadDate: new Date(),
@@ -27,9 +21,9 @@ roomItemRouter.post("/add-video", function (req, res, next) {
       res.redirect(`/room/${room._id}`);
     });
   });
-});
+};
 
-roomItemRouter.get("/vote", function (req, res, next) {
+exports.Vote = (req, res, next) => {
   Room.findById(req.params["roomId"]).then((room) => {
     const video = room.videos.find((video) => {
       const searchedId = ObjectId(req.body["video-id"]);
@@ -40,6 +34,4 @@ roomItemRouter.get("/vote", function (req, res, next) {
       res.redirect(`/room/${room._id.toHexString()}`);
     });
   });
-});
-
-module.exports = roomRouter;
+};
