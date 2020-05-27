@@ -15,6 +15,6 @@ block content
 
         p= video.description
         p count = #{video.voteCount}
-        form(action=room.id + "/vote", method="get")
-          input(type="hidden", name="video-id" value=video._id)
+        form(action=room.id + "/vote", method="post")
+          input(type="hidden", name="videoId" value=video._id)
           button(type="submit") Vote

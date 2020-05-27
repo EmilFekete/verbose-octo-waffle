@@ -14,7 +14,7 @@ exports.addVideo = (req, res, next) => {
     const video = new Video({
       url: req.body.url,
       description: req.body.description,
-      uploadDate: new Date(),
+      voteCount: 0,
     });
     room.videos.push(video);
     room.save().then(() => {
@@ -23,15 +23,17 @@ exports.addVideo = (req, res, next) => {
   });
 };
 
-exports.Vote = (req, res, next) => {
+exports.vote = (req, res, next) => {
   Room.findById(req.params["roomId"]).then((room) => {
-    const video = room.videos.find((video) => {
-      const searchedId = ObjectId(req.body["video-id"]);
-      return video._id === searchedId;
-    });
+    console.log(`VideoID: ${req.body.videoId}`);
+    const video = room.videos.find(
+      (i) => req.body.videoId.toString() === i._id.toString()
+    );
     video.voteCount++;
-    video.save().then(() => {
-      res.redirect(`/room/${room._id.toHexString()}`);
+    console.log(video.voteCount);
+    room.markModified("videos");
+    room.save().then(() => {
+      res.redirect(`/room/${room.id}`);
     });
   });
 };
