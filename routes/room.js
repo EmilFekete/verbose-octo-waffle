@@ -1,16 +1,15 @@
 const express = require("express");
 
-const controller = require("../controllers/room");
+class RoomRouter {
+  router;
+  constructor(controller) {
+    this.router = express.Router();
+    this.itemRouter = express.Router({ mergeParams: true });
+    this.router.use("/:roomId", this.itemRouter);
+    this.router.get("/:roomId", controller.getRoom);
+    this.itemRouter.post("/add-video", controller.addVideo);
+    this.itemRouter.post("/vote", controller.vote);
+  }
+}
 
-const roomRouter = express.Router();
-const roomItemRouter = express.Router({ mergeParams: true });
-
-roomRouter.use("/:roomId", roomItemRouter);
-
-roomRouter.get("/:roomId", controller.getRoom);
-
-roomItemRouter.post("/add-video", controller.addVideo);
-
-roomItemRouter.post("/vote", controller.vote);
-
-module.exports = roomRouter;
+module.exports = RoomRouter;

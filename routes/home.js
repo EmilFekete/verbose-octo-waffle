@@ -1,10 +1,11 @@
 const express = require("express");
+class HomeRouter {
+  router;
+  constructor(controller) {
+    this.router = express.Router();
+    this.router.get("/", controller.getHome);
+    this.router.post("/create-room", controller.createRoom);
+  }
+}
 
-const controller = require("../controllers/home")
-const router = express.Router();
-
-router.get("/", controller.getHome);
-
-router.post("/create-room", controller.createRoom );
-
-module.exports = router;
+module.exports = HomeRouter;
