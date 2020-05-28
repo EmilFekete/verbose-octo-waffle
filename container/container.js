@@ -6,25 +6,25 @@ const RoomController = require("../controllers/room");
 const RoomRouter = require("../routes/room");
 
 const bottle = new Bottle();
-bottle.serviceFactory("HomeController", () => {
+bottle.serviceFactory(HomeController.name, () => {
   return new HomeController();
 });
 bottle.serviceFactory(
-  "HomeRouter",
+  HomeRouter.name,
   (controller) => {
     return new HomeRouter(controller);
   },
-  "HomeController"
+  HomeController.name
 );
-bottle.serviceFactory("RoomController", () => {
+bottle.serviceFactory(RoomController.name, () => {
   return new RoomController();
 });
 bottle.serviceFactory(
-  "RoomRouter",
+  RoomRouter.name,
   (controller) => {
     return new RoomRouter(controller);
   },
-  "RoomController"
+  RoomController.name
 );
 
 module.exports = bottle.container;
