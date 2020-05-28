@@ -1,5 +1,7 @@
-const Room = require("../models/room");
-const Video = require("../models/video");
+const appRoot = require("app-root-path");
+const logger = require(appRoot + "/util/logger");
+const Room = require(appRoot + "/model/room");
+const Video = require(appRoot + "/model/video");
 
 class RoomController {
   getRoom = (req, res, next) => {
@@ -26,7 +28,7 @@ class RoomController {
 
   vote = (req, res, next) => {
     Room.findById(req.params["roomId"]).then((room) => {
-      console.log(`VideoID: ${req.body.videoId}`);
+      logger.info(`Vote for videoId: ${req.body.videoId}`);
       const video = room.videos.find(
         (i) => req.body.videoId.toString() === i._id.toString()
       );

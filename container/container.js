@@ -1,9 +1,9 @@
 const Bottle = require("bottlejs");
-
-const HomeController = require("../controllers/home");
-const HomeRouter = require("../routes/home");
-const RoomController = require("../controllers/room");
-const RoomRouter = require("../routes/room");
+const appRoot = require("app-root-path");
+const HomeController = require(appRoot + "/controller/home");
+const HomeRouter = require(appRoot + "/route/home");
+const RoomController = require(appRoot + "/controller/room");
+const RoomRouter = require(appRoot + "/route/room");
 
 const bottle = new Bottle();
 bottle.serviceFactory(HomeController.name, () => {

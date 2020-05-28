@@ -1,11 +1,13 @@
-const Room = require("../models/room");
+const appRoot = require("app-root-path");
+const logger = require(appRoot + "/util/logger");
+const Room = require(appRoot + "/model/room");
 
 class HomeController {
   createRoom = (req, res, next) => {
     const room = new Room({ name: req.body.name });
     room.save().then((err) => {
-      console.log("Room Saved!");
-      console.log(room);
+      logger.info("Room Saved!");
+      logger.info(room);
       res.redirect(`/room/${room._id}`);
     });
   };

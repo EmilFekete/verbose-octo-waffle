@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "bottlejs": "^1.7.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -13,7 +14,9 @@
     "http-errors": "~1.6.3",
     "mongodb": "^3.5.7",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2"
   },
   "devDependencies": {
     "mongoose": "^5.9.15",
