@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const appRoot = require("app-root-path");
-const debug = require("debug")("verbose-octo-waffle:server");
 const http = require("http");
 
 const app = require(appRoot + "/app");
