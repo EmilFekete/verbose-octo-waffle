@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  h1 Hello User: #{user.name}
   form(action="create-room", method="post")
     input(type="text", name="name")
     button(type="submit") Create Room!

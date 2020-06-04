@@ -1,11 +1,10 @@
+require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
 const appRoot = require("app-root-path");
 const db = require(appRoot + "/util/database");
-require("dotenv").config();
 const logger = require(appRoot + "/util/logger");
 
 const app = express();
@@ -14,18 +13,10 @@ app.set("views", path.join(__dirname, "view"));
 app.set("view engine", "pug");
 
 app.use(logger.loggerMiddleware);
+db.connectToDB(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { expires: 365 * 24 * 60 * 60 * 1000 },
-    store: db.sessionStore,
-  })
-);
 app.use(express.static(path.join(__dirname, "public")));
 
 //Route config needs to happen after express config

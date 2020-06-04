@@ -1,28 +1,36 @@
 const mongoose = require("mongoose");
 const appRoot = require("app-root-path");
 const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session);
+const MongoStore = require("connect-mongo")(session);
 const logger = require(appRoot + "/util/logger");
 
-const store = new MongoDBStore({
-  uri: process.env.DB_URI,
-  collection: "session",
-});
-
-const mongoConnect = () =>
+const connectToDB = (app) => {
   mongoose
     .connect(process.env.DB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then((dunno) => {
+    .then(() => {
       logger.info("Connected!");
-      logger.info(dunno);
     })
     .catch((err) => {
       logger.error(err);
       throw err;
     });
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        expires: 365 * 24 * 60 * 60 * 1000,
+      },
+      store: new MongoStore({
+        mongooseConnection: mongoose.connection,
+        collection: "sessions",
+      }),
+    })
+  );
+};
 
-exports.mongoConnect = mongoConnect;
-exports.sessionStore = store;
+exports.connectToDB = connectToDB;

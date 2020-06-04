@@ -4,7 +4,6 @@ const http = require("http");
 
 const app = require(appRoot + "/app");
 const logger = require(appRoot + "/util/logger");
-const mongo = require(appRoot + "/util/database");
 
 const normalizePort = (val) => {
   let port = parseInt(val, 10);
@@ -55,8 +54,6 @@ app.set("port", port);
 
 const server = http.createServer(app);
 
-mongo.mongoConnect().then(() => {
-  server.listen(port);
-  server.on("error", onError);
-  server.on("listening", onListening);
-});
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);

@@ -8,6 +8,7 @@
   "dependencies": {
     "app-root-path": "^3.0.0",
     "bottlejs": "^1.7.2",
+    "connect-mongo": "^3.2.0",
     "connect-mongodb-session": "^2.3.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
