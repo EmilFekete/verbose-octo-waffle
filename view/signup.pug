@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1 SIGN UP
+    form(action="signup", method="post")
+        label(for="email") Email:
+        input(id="email" type="text", name="email")
+        label(for="password") Password:
+        input(id="password" type="text", name="password")
+        label(for="confirmPassword") Confirm Password:
+        input(id="confirmPassword" type="text", name="confirmPassword")
+        button(type="submit") Signup

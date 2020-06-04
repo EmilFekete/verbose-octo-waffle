@@ -14,18 +14,7 @@ class HomeController {
   };
 
   getHome = (req, res, next) => {
-    req.session.reload((err) => {
-      if (err) {
-        logger.error(err);
-      }
-      if (!req.session.user) {
-        const randomNum = Math.random().toString().substring(2, 10);
-        const user = new User({ name: randomNum });
-        req.session.user = user;
-        req.session.save();
-      }
-      res.render("home", { user: req.session.user });
-    });
+    res.render("home", { user: req.session.user });
   };
 }
 

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h1 LOGIN
+    form(action="login", method="post")
+        label(for="email") Email:
+        input(id="email" type="text", name="email")
+        label(for="password") Password:
+        input(id="password" type="text", name="password")
+        button(type="submit") Login

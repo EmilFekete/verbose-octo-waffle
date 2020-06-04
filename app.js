@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Route config needs to happen after express config
 const container = require("./container/container");
+app.use("/", container.AuthRouter.router);
 app.use("/", container.HomeRouter.router);
 app.use("/room", container.RoomRouter.router);
 

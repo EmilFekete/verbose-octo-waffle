@@ -4,6 +4,8 @@ const HomeController = require(appRoot + "/controller/home");
 const HomeRouter = require(appRoot + "/route/home");
 const RoomController = require(appRoot + "/controller/room");
 const RoomRouter = require(appRoot + "/route/room");
+const AuthController = require(appRoot + "/controller/auth");
+const AuthRouter = require(appRoot + "/route/auth");
 
 const bottle = new Bottle();
 bottle.serviceFactory(HomeController.name, () => {
@@ -25,6 +27,18 @@ bottle.serviceFactory(
     return new RoomRouter(controller);
   },
   RoomController.name
+);
+
+bottle.serviceFactory(AuthController.name, () => {
+  return new AuthController();
+});
+
+bottle.serviceFactory(
+  AuthRouter.name,
+  (controller) => {
+    return new AuthRouter(controller);
+  },
+  AuthController.name
 );
 
 module.exports = bottle.container;
