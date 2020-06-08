@@ -24,7 +24,9 @@ class AuthController {
         logger.info("User Saved!");
         logger.info(user);
         req.session.user = user;
-        res.redirect("/");
+        req.session.save(err => {
+          res.redirect("/");
+        })
       });
   };
 
@@ -41,15 +43,18 @@ class AuthController {
       } else {
         bcrypt
           .compare(req.body.password, user.password)
-          .then(() => {
-            logger.info("Login successful");
-            req.session.user = user;
-            res.redirect("/");
-          })
-          .catch((err) => {
-            logger.info(`Wrong password!`);
-            res.redirect("/login");
-          });
+          .then((result) => {
+            if(result) {
+              logger.info("Login successful");
+              req.session.user = user;
+              req.session.save(err => {
+                res.redirect("/");
+              })
+            } else {
+              logger.info(`Wrong password!`);
+              res.redirect("/login");
+            }            
+          })        
       }
     });
   };
